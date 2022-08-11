@@ -18,10 +18,9 @@ function App() {
       for (var i = 0; i < length; i++) {
         ua[i] = image.charCodeAt(i);
       }
-
       console.log("image= "+image);
       console.log("ua= "+ua);
-    FaceRecognition(ua);
+    FaceRecognition(image);
     } else console.log("erreur length");
   };
 

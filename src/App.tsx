@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import FaceRecognition from "./components/FaceRecognition";
 import ImportPictureFile from "./components/ImportPictureFile";
@@ -9,19 +9,23 @@ interface img {
 
 function App() {
   const [convertedFile, setConvertedFile] = useState<img>();
+  const [imgToSend, setImgToSend] = useState<string>();
+  
+console.log('imgToSend'+imgToSend);
+
+  
   const analize = () => {
-    const image = convertedFile?.base64String.split("data:image/jpeg;base64,")[1];
-    const length = image?.length;
+    let image = "";
+    let length: number;
+    if (convertedFile?.base64String.includes("data:image/jpeg;base64,")) {
+      image = convertedFile?.base64String.split("data:image/jpeg;base64,")[1];
+    } else if (convertedFile?.base64String.includes("data:image/png;base64,")) {
+      image = convertedFile?.base64String.split("data:image/png;base64,")[1];
+    } else {console.log("fichier n'est ni jpeg ni png")}
+    length = image?.length;
     if (length) {
-      const imageBytes = new ArrayBuffer(length);
-      const ua = new Uint8Array(imageBytes);
-      for (var i = 0; i < length; i++) {
-        ua[i] = image.charCodeAt(i);
-      }
-      console.log("image= "+image);
-      console.log("ua= "+ua);
     FaceRecognition(image);
-    } else console.log("erreur length");
+    } else console.log("erreur importation");
   };
 
   const dataToAWS = (value: img) => {

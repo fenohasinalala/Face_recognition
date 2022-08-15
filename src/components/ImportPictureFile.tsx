@@ -7,7 +7,7 @@ interface img {
 }
 
 interface Props {
-  dataToAWS: any;
+  dataToAWS: (a: img) => void;
 }
 
 const ImportPictureFile: React.FC<Props> = (Props) => {
@@ -24,13 +24,8 @@ const ImportPictureFile: React.FC<Props> = (Props) => {
       setFile(tempFileList);
       Props.dataToAWS(tempFileList);
     }
-
-    
-      
-    
   };
-  console.log(file);
-  
+  //console.log(file);
 
   return (
     <>

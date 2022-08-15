@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import FaceRecognition from "./components/FaceRecognition";
 import ImportPictureFile from "./components/ImportPictureFile";
@@ -9,34 +9,38 @@ interface img {
 
 function App() {
   const [convertedFile, setConvertedFile] = useState<img>();
-  const [imgToSend, setImgToSend] = useState<string>();
-  
-console.log('imgToSend'+imgToSend);
+  const [getResult, setGetResult] = useState<any>();
+  const [image, setImage] = useState<string>("");
+  const [count, setCount] = useState(0);
 
+  console.log(getResult);
   
-  const analize = () => {
-    let image = "";
-    let length: number;
-    if (convertedFile?.base64String.includes("data:image/jpeg;base64,")) {
-      image = convertedFile?.base64String.split("data:image/jpeg;base64,")[1];
-    } else if (convertedFile?.base64String.includes("data:image/png;base64,")) {
-      image = convertedFile?.base64String.split("data:image/png;base64,")[1];
-    } else {console.log("fichier n'est ni jpeg ni png")}
-    length = image?.length;
-    if (length) {
-    FaceRecognition(image);
-    } else console.log("erreur importation");
-  };
 
   const dataToAWS = (value: img) => {
     setConvertedFile(value);
   };
-  console.log("convertedFile: " + convertedFile);
+  //console.log("convertedFile: " + convertedFile);
+
+  const resultat = (e: any) => {
+    setGetResult(e);
+  };
+
+  const analyze = () => {
+    if (convertedFile?.base64String.includes("data:image/jpeg;base64,")) {
+      setImage(convertedFile?.base64String.split("data:image/jpeg;base64,")[1]);
+    } else if (convertedFile?.base64String.includes("data:image/png;base64,")) {
+      setImage(convertedFile?.base64String.split("data:image/png;base64,")[1]);
+    } else {
+      console.log("fichier n'est ni jpeg ni png");
+    }
+    setCount(current => current + 1);
+  };
 
   return (
     <div className="App">
       <ImportPictureFile dataToAWS={dataToAWS} />
-      <button onClick={analize}>ANALIZE</button>
+      <button onClick={analyze}>ANALIZE</button>
+      <FaceRecognition imageData={image} resultat={resultat} count={count}/>
     </div>
   );
 }

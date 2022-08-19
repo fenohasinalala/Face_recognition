@@ -1,5 +1,9 @@
 import React, { useState } from "react";
+import { Form } from "react-bootstrap";
+import FaceChoose from "../faceChoose/FaceChoose";
+import { objectType } from "../interface/Interface";
 import { fileToBase64 } from "./FileToBase64";
+import "./style.css";
 
 interface img {
   fileName: string;
@@ -8,6 +12,9 @@ interface img {
 
 interface Props {
   dataToAWS: (a: img) => void;
+  activ: number | null;
+  setActive: React.Dispatch<React.SetStateAction<number | null>>;
+  getResult: objectType[];
 }
 
 const ImportPictureFile: React.FC<Props> = (Props) => {
@@ -29,8 +36,18 @@ const ImportPictureFile: React.FC<Props> = (Props) => {
 
   return (
     <>
-      <input type="file" multiple onChange={onSelectFiles} />
-      <img src={file?.base64String} alt="" />
+      <div className="custom-file fichier">
+        <input
+          type="file"
+          className="custom-file-input "
+          id="customFile"
+          multiple
+          onChange={onSelectFiles}
+        />
+        <label className="custom-file-label" htmlFor="customFile">
+          Choose file
+        </label>
+      </div>
     </>
   );
 };

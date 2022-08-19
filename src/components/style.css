@@ -1,0 +1,31 @@
+
+
+
+
+.theImg{
+    width: 100%;
+}
+
+.FaceSelected{
+    position:absolute;
+    overflow: visible !important;
+    background-color: rgba(162, 165, 194, 0.29);
+    border: 1px rgb(72, 255, 0) double;
+}
+
+.theActivFace{
+    position:absolute;
+    overflow: visible !important;
+    flex: content;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    background-color: rgba(162, 165, 194, 0.29);
+    border-radius: 20%;
+    border: 1px rgb(183, 0, 255) double;
+}
+
+.fichier{
+    padding: 1.5em;
+    
+}

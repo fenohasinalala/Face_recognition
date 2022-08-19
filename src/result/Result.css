@@ -1,0 +1,9 @@
+.ligne{
+    border-color: black!important;
+    border-width: 2px;
+
+}
+
+.liste{
+    list-style-type:none
+}
